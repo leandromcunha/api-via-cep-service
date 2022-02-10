@@ -1,0 +1,66 @@
+app:
+  urls:
+    service:
+      via-cep: https://viacep.com.br
+server:
+  port: 8082
+spring:
+  main:
+    allow-circular-references: true
+  cloud:
+    config:
+      enabled: false
+  application:
+    name: api-via-cep
+  datasource:
+    driverClassName: org.h2.Driver
+    hikari:
+      auto-commit: true
+      connection-timeout: 30000
+      maximum-pool-size: 10
+      pool-name: viacepcp
+    tomcat:
+      default-auto-commit: true
+    type: com.zaxxer.hikari.HikariDataSource
+    #url: jdbc:h2:mem:viacepdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    url: jdbc:h2:file:./db/viacepdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;
+    #url: jdbc:h2:tcp://localhost:9091/mem:mydb
+    sql-script-encoding: UTF-8
+    username: sa
+    password: 
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  jackson:
+    date-format: dd/MM/yyyy HH:mm:ss
+    default-property-inclusion: NON_NULL
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+        use_sql_comments: true
+  messages:
+    basename: i18n/messages
+logging:
+  level:
+    root: info
+    sql: info
+    web: info
+    org:
+      hibernate: info
+      springframework:
+        web: info
+springdoc:
+  swagger-ui:
+    path: /${SWAGGER_PATH:swagger-ui.html}
+    enabled: ${SWAGGER_ENABLED:true}
+  api-docs:
+    path: ${API_DOCS_PATH:/v3/api-docs}
+    enabled: ${API_DOCS_ENABLED:true}
