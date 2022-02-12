@@ -3,15 +3,17 @@ package br.com.cs.feign.api.service.impl;
 import org.springframework.stereotype.Service;
 
 import br.com.cs.feign.api.annotation.ReopenStep;
-import br.com.cs.feign.api.constant.ReopenStenEnum;
-import br.com.cs.feign.api.service.ReopenProcessServece;
+import br.com.cs.feign.api.constant.ReopenStepEnum;
+import br.com.cs.feign.api.service.dto.HistoryProcessDTO;
+import br.com.cs.feign.api.service.dto.MerchatDTO;
 
-@ReopenStep(step = ReopenStenEnum.UPDATE_INFO_DC  )
+@ReopenStep(step = ReopenStepEnum.UPDATE_INFO_DC  )
 @Service("UpdateInfoDBImpl")
-public class UpdateInfoDBImpl implements ReopenProcessServece {
+class UpdateInfoDBImpl extends ReopenProcessAbstract {
+
 	@Override
-	public void process(String value) {
-		System.out.println( ReopenStenEnum.UPDATE_INFO_DC.name() +"::" + value );
+	protected HistoryProcessDTO execute(MerchatDTO merchatDTO) throws Exception {
+		return HistoryProcessDTO.builder().message("Sucesso na Execução").status("S").build();
 	}
 
 }

@@ -11,8 +11,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import br.com.cs.feign.api.annotation.ReopenStep;
-import br.com.cs.feign.api.constant.ReopenStenEnum;
-import br.com.cs.feign.api.service.ReopenProcessServece;
+import br.com.cs.feign.api.constant.ReopenStepEnum;
+import br.com.cs.feign.api.service.ReopenProcessService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,16 +23,17 @@ public class ReopenConfig {
 
 	private final ApplicationContext applicationContext;
 
-	private Map<ReopenStenEnum, ReopenProcessServece > reopenMapper;
+	private Map<ReopenStepEnum, ReopenProcessService > reopenMapper;
+
 
 	@PostConstruct
 	private void loadMapper() {
 
 		this.reopenMapper = new LinkedHashMap<>();
 
-		ObjectProvider<ReopenProcessServece> beans = this.applicationContext
+		ObjectProvider<ReopenProcessService> beans = this.applicationContext
 				.getAutowireCapableBeanFactory()
-				.getBeanProvider(ReopenProcessServece.class);
+				.getBeanProvider(ReopenProcessService.class);
 
 		beans.forEach( bean -> {
 			log.info("ReopenBeans ::: " + bean.getClass().getSimpleName() );
@@ -43,8 +44,12 @@ public class ReopenConfig {
 		} );
 	}
 
+
+
 	@Bean
-	public Map<ReopenStenEnum, ReopenProcessServece >  reopenMapper(){
+	public Map<ReopenStepEnum, ReopenProcessService >  reopenMapper(){
 		return this.reopenMapper;
 	}
+
+
 }
